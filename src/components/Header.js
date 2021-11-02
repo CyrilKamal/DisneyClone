@@ -3,12 +3,11 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { auth, provider } from "../firebase";
-import { signInWithPopup, signOut } from "firebase/auth";
 import {
   selectUserName,
   selectUserPhoto,
-  setSignOutState,
   setUserLoginDetails,
+  setSignOutState,
 } from "../features/user/userSlice";
 
 const Header = (props) => {
@@ -25,9 +24,11 @@ const Header = (props) => {
       }
     });
   }, [userName]);
+
   const handleAuth = () => {
     if (!userName) {
-      signInWithPopup(auth, provider)
+      auth
+        .signInWithPopup(provider)
         .then((result) => {
           setUser(result.user);
         })
@@ -35,7 +36,8 @@ const Header = (props) => {
           alert(error.message);
         });
     } else if (userName) {
-      signOut(auth)
+      auth
+        .signOut()
         .then(() => {
           dispatch(setSignOutState());
           history.push("/");
