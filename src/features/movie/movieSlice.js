@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialstate = {
+const initialState = {
   recommend: null,
   newDisney: null,
   original: null,
